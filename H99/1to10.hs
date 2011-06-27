@@ -39,3 +39,7 @@ myReverse'' list = reverse''' list []
   where
     reverse''' [] acc = acc
     reverse''' (x:xs) acc = reverse''' xs (x:acc)
+
+ -- Problem 6
+isPalindrome :: (Eq a) => [a] -> Bool
+isPalindrome list = list == reverse list
