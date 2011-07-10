@@ -60,3 +60,12 @@ max' x y
 calcBmis :: (RealFloat a) => [(a,a)] -> [a]
 calcBmis xs = [ bmi w h | (w,h) <- xs ]
   where bmi weight height = weight / height^2
+
+fibonacci :: (Num a) => a -> a
+fibonacci n
+  | n == 0 = 0
+  | n == 1 = 1
+  | otherwise = fibonacci (n-1) + fibonacci (n-2) 
+
+testtype :: [a] -> [[a]]
+testtype x = [x]
