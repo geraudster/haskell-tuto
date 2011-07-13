@@ -69,3 +69,27 @@ fibonacci n
 
 testtype :: [a] -> [[a]]
 testtype x = [x]
+
+zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
+
+chain :: Int -> [Int]
+chain x
+  | x<=1 = [1]
+  | even x = x : chain (x `div` 2)
+  | otherwise = x : chain (x*3+1)
+numLongChains :: Int
+numLongChains = length (filter criteria (map chain [1..100]))
+  where
+    criteria xs = length xs > 15
+
+numLongChains' :: Int
+numLongChains' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
+
+sum'' :: (Num a) => [a] -> a
+sum'' = foldl (+) 0
+
+sqrtSums :: Int
+sqrtSums = length . takeWhile (<1000) . scanl1 (+) $ map sqrt [1..]
