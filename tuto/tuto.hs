@@ -93,3 +93,14 @@ sum'' = foldl (+) 0
 
 sqrtSums :: Int
 sqrtSums = length . takeWhile (<1000) . scanl1 (+) $ map sqrt [1..]
+
+data Vector a = Vector a a a deriving (Show)
+
+vplus :: (Num a) => Vector a -> Vector a -> Vector a
+(Vector x1 y1 z1) `vplus` (Vector x2 y2 z2) = Vector (x1+x2) (y1+y2) (z1+z2)
+
+vmult :: (Num a) => Vector a -> a -> Vector a
+(Vector x y z) `vmult` n = Vector (x*n) (y*n) (z*n)
+
+dotProd :: (Num a) => Vector a -> Vector a -> a
+(Vector x1 y1 z1) `dotProd` (Vector x2 y2 z2) = x1*x2 + y1*y2 + z1*z2
