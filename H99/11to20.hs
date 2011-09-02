@@ -26,7 +26,7 @@ decodeModified (x:xs) = (decodeRecord x) ++ decodeModified xs
     decodeRecord (Single value) = [value]
     decodeRecord (Multiple count value) = replicate count value
 
--- Problem 13    
+-- Problem 13
 encodeDirect :: (Eq a) => [a] -> [Record a]
 encodeDirect [] = []
 encodeDirect (x:xs) = encode' xs (Single x)
