@@ -104,3 +104,73 @@ vmult :: (Num a) => Vector a -> a -> Vector a
 
 dotProd :: (Num a) => Vector a -> Vector a -> a
 (Vector x1 y1 z1) `dotProd` (Vector x2 y2 z2) = x1*x2 + y1*y2 + z1*z2
+
+data Person = Person { firstName :: String
+                     , lastName :: String
+                     , age :: Int } deriving (Show,Eq,Read)
+--                     , car :: Car } deriving (Show,Eq)
+
+mysteryDude = "Person { firstName = \"Toto\"" ++
+              ", lastName = \"TOTO\"" ++
+              ", age = 21}"
+
+data Car = Car { model :: String
+               , color :: String } deriving (Show,Eq)
+                                            
+-- doesn't work
+-- data TestPerson2 = Person2 { car :: Car }
+
+data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+         deriving (Show, Eq, Ord, Read, Bounded, Enum)
+                  
+data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving Show
+
+insertTree :: (Ord a) => a -> Tree a -> Tree a
+insertTree x EmptyTree = Node x EmptyTree EmptyTree
+insertTree x (Node value left right)
+  | x == value = (Node value left right)
+  | x < value = (Node value (insertTree x left) right)
+  | otherwise = (Node value left (insertTree x right))
+
+treeElem :: (Ord a) => a -> Tree a -> Bool
+treeElem x EmptyTree = False
+treeElem x (Node value left right)
+  | x == value = True
+  | x < value = treeElem x left
+  | otherwise = treeElem x right
+                
+instance Functor Tree where
+  fmap f EmptyTree = EmptyTree
+  fmap f (Node value left right) = Node (f value) (fmap f left) (fmap f right)
+
+data TrafficLight = Red | Yellow | Green
+instance Eq TrafficLight where
+  Red == Red = True
+  Yellow == Yellow = True
+  Green == Green = True
+  _ == _ = False
+  
+instance Show TrafficLight where
+  show Red = "Red light"
+  show Yellow = "Yellow light"
+  show Green = "Green light"
+
+class YesNo a where
+  yesno :: a -> Bool
+  
+instance YesNo Int where
+  yesno 0 = False
+  yesno _ = True
+
+instance YesNo [a] where
+  yesno [] = False
+  yesno _ = True
+
+instance YesNo (Maybe a) where
+  yesno (Just _) = True
+  yesno Nothing = False
+
+yesnoIf :: (YesNo a) => a -> t -> t -> t
+yesnoIf yesnoVal yesResult noResult = if yesno yesnoVal
+                                      then yesResult
+                                      else noResult
