@@ -44,3 +44,32 @@ encodeDirect (x:xs) = encode' xs (Single x)
 -- Problem 14
 duplicate :: [a] -> [a]
 duplicate = foldr (\x acc -> x:x:acc) []
+
+-- Problem 15
+repli :: [a] -> Int -> [a]
+repli l n = foldl (\acc x -> acc ++ (replicate n x)) [] l 
+
+repli' =  flip $concatMap . replicate
+
+-- Problem 16
+dropEvery :: [a] -> Int -> [a]
+dropEvery l n = drop' l 1 
+  where drop' [] _ = []
+        drop' (x:xs) m 
+          | (m `mod` n)  == 0 = drop' xs 1
+          | otherwise = x:drop' xs (m+1)
+
+-- Problem 17
+split :: [a] -> Int -> [[a]]
+split l n = helper l 0 []
+  where helper [] _ acc = [acc]
+        helper (x:xs) count acc
+          | count == n = [acc,x:xs]
+          | otherwise = helper xs (count+1) (acc++[x])
+
+-- split "abcdefgh" 3
+-- ["abc","defgh"]
+split' :: [a] -> Int -> ([a],[a])
+split' l 0 = ([],l)
+split' [] _ = ([],[])
+split' (x:xs) n = let (l1,l2) = split' xs (n-1) in (x:l1,l2)
